@@ -13,7 +13,7 @@ int main()
    // Ska inte vara möjligt - Expression_Tree ska vara abstrakt:
    // Expression_Tree* t0{new Expression_Tree};
 
-   Expression_Tree* t1{ new Plus{ new Integer{7}, new Real{3.14} } };
+   Expression_Tree* t1{ new Power{ new Integer{6}, new Real{2} } };
    Expression_Tree* t_int{new Integer{99}};
    Expression_Tree* t_real{new Real{4.5}};
    try
@@ -44,8 +44,9 @@ int main()
    cout << "t2->get_postfix() = " << t2->get_postfix() << '\n';
    cout << "t2->str() = " << t2->str() << "\n\n";
   
-   Expression_Tree* TEST{new Plus{new Plus{new Integer{5},new Real{3.2}},new Integer{2}}};
-try
+   Expression_Tree* TEST{new Power{new Minus{new Integer{5},new Real{2}},new Integer{2}}};
+
+   try
    {
       cout << "TEST->evaluate() = " << TEST->evaluate() << '\n';
    }

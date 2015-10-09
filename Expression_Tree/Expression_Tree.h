@@ -68,31 +68,35 @@ public:
 Plus(Expression_Tree* lhs, Expression_Tree* rhs) : Binary_Operator{lhs, rhs} {};
     long double evaluate() const override;
 };
-/*
+
 class Minus : public Binary_Operator 
 {
 public:
 Minus(Expression_Tree* lhs, Expression_Tree* rhs) : Binary_Operator{lhs, rhs} {};
+    long double evaluate() const override;
 };
 
 class Times : public Binary_Operator
 {
 public:
 Times(Expression_Tree* lhs, Expression_Tree* rhs) : Binary_Operator{lhs, rhs} {};
+    long double evaluate() const override;
 };
 
 class Divide : public Binary_Operator
 {
 public:
 Divide(Expression_Tree* lhs, Expression_Tree* rhs) : Binary_Operator{lhs, rhs} {};
+    long double evaluate() const override;
 };
 
 class Power: public Binary_Operator
 {
 public:
 Power(Expression_Tree* lhs, Expression_Tree* rhs) : Binary_Operator{lhs, rhs} {};
+    long double evaluate() const override;
 };
-*/
+
 class Integer : public Operand
 {
 public:

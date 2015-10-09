@@ -6,6 +6,7 @@
 #include <string>
 #include <iostream>
 #include <typeinfo>
+#include <cmath>
 using namespace std;
 
 // SEPARATA DEFINITIONER FÖR FÖR EXPRESSION_TREE-KLASSERNA DEFINIERAS HÄR.
@@ -19,10 +20,32 @@ Binary_Operator::Binary_Operator(Expression_Tree* left, Expression_Tree* right)
 Expression_Tree* Binary_Operator::clone() const
 {
     Expression_Tree* p;
+
     if(typeid(*this) == typeid(Plus))
     {
         p = {new Plus{lhs->clone(),rhs->clone()}};
     }
+
+    if(typeid(*this) == typeid(Minus))
+    {
+        p = {new Minus{lhs->clone(),rhs->clone()}};
+    }
+
+    if(typeid(*this) == typeid(Times))
+    {
+        p = {new Times{lhs->clone(),rhs->clone()}};
+    }
+
+    if(typeid(*this) == typeid(Divide))
+    {
+        p = {new Divide{lhs->clone(),rhs->clone()}};
+    }
+
+    if(typeid(*this) == typeid(Power))
+    {
+        p = {new Power{lhs->clone(),rhs->clone()}};
+    }
+
     return p;
 }
 
@@ -48,11 +71,7 @@ string Binary_Operator::get_postfix() const
     postfix.append(" ");
     postfix.append(str2);
     postfix.append(" ");
-
-    if(typeid(*this) == typeid(Plus))
-    {
-        postfix.append("+");
-    }
+    postfix.append(this->str());
 
     return postfix;
  }
@@ -60,9 +79,30 @@ string Binary_Operator::get_postfix() const
 string Binary_Operator::str() const
 {
     string node;
+
     if(typeid(*this) == typeid(Plus))
     {
         node = "+";
+    }
+
+    if(typeid(*this) == typeid(Minus))
+    {
+        node = "-";
+    }
+
+    if(typeid(*this) == typeid(Times))
+    {
+        node = "*";
+    }
+
+    if(typeid(*this) == typeid(Divide))
+    {
+        node = "/";
+    }
+
+    if(typeid(*this) == typeid(Power))
+    {
+        node = "^";
     }
 
     return node;
@@ -90,7 +130,31 @@ long double Real::evaluate() const
 
 long double Plus::evaluate() const
 {
-    long double result{rhs->evaluate() + lhs->evaluate()};
+    long double result{lhs->evaluate() + rhs->evaluate()};
+    return result;
+}
+
+long double Minus::evaluate() const
+{
+    long double result{lhs->evaluate() - rhs->evaluate()};
+    return result;
+}
+
+long double Times::evaluate() const
+{
+    long double result{lhs->evaluate() * rhs->evaluate()};
+    return result;
+}
+
+long double Divide::evaluate() const
+{
+    long double result{lhs->evaluate() / rhs->evaluate()};
+    return result;
+}
+
+long double Power::evaluate() const
+{
+    long double result{pow(lhs->evaluate(), rhs->evaluate())};
     return result;
 }
 
