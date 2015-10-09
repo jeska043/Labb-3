@@ -98,7 +98,7 @@ execute_command()
    else if (command_ == 'U')
       read_expression(cin);
    else if (command_ == 'B')
-      cout << current_expression_.evaluate() << "\n";
+     cout << current_expression_.evaluate() << "\n";
    else if (command_ == 'P')
       cout << current_expression_.get_postfix() << "\n";
    else if (command_ == 'T')

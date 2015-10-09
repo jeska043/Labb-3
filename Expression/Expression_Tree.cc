@@ -42,7 +42,7 @@ long double Binary_Operator::evaluate() const
 
 long double Plus::evaluate() const
 {
-    cout << "inne i evaluate" << endl;
+    cerr << "inne i Plus-evaluate" << endl;
     return rhs->evaluate() + lhs->evaluate();
 }
 

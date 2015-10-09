@@ -6,6 +6,7 @@
 #include <iosfwd>
 #include <stdexcept>
 #include <string>
+#include "Expression_Tree.h"
 
 /**
  * expression_error: kastas om fel inträffar i en Expression- operation;
@@ -21,13 +22,16 @@ class Expression
 public:
    // OBSERVERA: DETTA ÄR ENDAST KODSKELETT - MODIFIERA OCH KOMPLETTERA!
 
-   Expression(class Expression_Tree* = nullptr) {}
+Expression(Expression_Tree* treetop) : tree_top{treetop} {};
 
    long double evaluate() const;
    std::string get_postfix() const;
    bool        empty() const;
    void        print_tree(std::ostream&) const;
    void        swap(Expression&);
+
+private:
+   Expression_Tree* tree_top;
 };
 
 /**

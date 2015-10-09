@@ -12,6 +12,7 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
+#include <typeinfo>
 using namespace std;
 
 /*
@@ -19,7 +20,12 @@ using namespace std;
  */
 long double Expression::evaluate() const
 {
-     // ATT GÖRA!
+    Binary_Operator* p{dynamic_cast<Binary_Operator*>(tree_top)};
+    cerr << typeid(*p).name() << endl;
+    cerr << "inne i evaluate på expression" << endl;
+    long double result;
+    result = p->evaluate();
+    return result;
 }
 
 /*
