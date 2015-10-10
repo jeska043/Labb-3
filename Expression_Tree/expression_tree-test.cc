@@ -69,5 +69,25 @@ Expression_Tree* TEST_CLONE{ TEST->clone() };
    }
    cout << "TEST_CLONE->get_postfix() = " << TEST_CLONE->get_postfix() << '\n';
    cout << "TEST_CLONE->str() = " << TEST_CLONE->str() << "\n\n";
+
+   Expression_Tree* assign1{new Assign{new Variable{"x"}, new Plus{new Integer{1},new Times{new Integer{2},new Integer{4}}}}};
+   try
+   {
+      cout << "assign1->evaluate() = " << assign1->evaluate() << '\n';
+   }
+   catch (const exception& e)
+   {
+      cout << "Undantag fångat: " << e.what() << '\n';
+   }
+   cout << "assign1->get_postfix() = " << assign1->get_postfix() << '\n';
+   cout << "assign1->str() = " << assign1->str() << "\n\n";
+
+   Variable* var1{new Variable{"y"}};
+   cout << "var1->get_value() = " << var1->get_value() << endl;
+   cout << "var1->set_value(13.37);" << endl;
+   var1->set_value(13.37);
+   cout << "var1->get_value() = "<< var1->get_value() << endl;
+
+   
    return 0;
 }

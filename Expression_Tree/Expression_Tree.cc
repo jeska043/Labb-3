@@ -13,6 +13,15 @@ using namespace std;
 
 Binary_Operator::Binary_Operator(Expression_Tree* left, Expression_Tree* right)
 {
+    if(typeid(*left) == typeid(Variable))
+    {
+        left->assigned_value = right->evaluate();
+    }
+    if(typeid(*right) == typeid(Variable))
+    {
+        right->assigned_value = left->evaluate();
+    }
+
     lhs = left;
     rhs = right;
 }
@@ -46,6 +55,11 @@ Expression_Tree* Binary_Operator::clone() const
         p = {new Power{lhs->clone(),rhs->clone()}};
     }
 
+    if(typeid(*this) == typeid(Assign))
+    {
+        p = {new Assign{lhs->clone(),rhs->clone()}};
+    }
+
     return p;
 }
 
@@ -58,6 +72,12 @@ Expression_Tree* Integer::clone() const
 Expression_Tree* Real::clone() const
 {
     Expression_Tree* p{new Real{value}};
+    return p;
+}
+
+Expression_Tree* Variable::clone() const
+{
+    Expression_Tree* p{new Variable{name}};
     return p;
 }
 
@@ -105,6 +125,11 @@ string Binary_Operator::str() const
         node = "^";
     }
 
+    if(typeid(*this) == typeid(Assign))
+    {
+        node = "=";
+    }
+
     return node;
 }
 
@@ -118,6 +143,11 @@ Real::Real(long double a)
     value = a;
 }
 
+Variable::Variable(string a)
+{
+    name = a;
+}
+
 long double Integer::evaluate() const
 {
     return value;
@@ -126,6 +156,11 @@ long double Integer::evaluate() const
 long double Real::evaluate() const
 {
     return value;
+}
+
+long double Variable::evaluate() const
+{
+    return assigned_value;
 }
 
 long double Plus::evaluate() const
@@ -158,6 +193,21 @@ long double Power::evaluate() const
     return result;
 }
 
+long double Assign::evaluate() const
+{
+    long double result{0};
+    if(typeid(*lhs) == typeid(Variable))
+    {
+        result = rhs->evaluate();
+    }
+    else
+    {
+        result = lhs->evaluate();
+    }
+
+    return result;
+}
+
 string Integer::get_postfix() const
 {
     string int_string{to_string(value)};
@@ -170,7 +220,23 @@ string Real::get_postfix() const
     return real_string;
 }
 
+string Variable::get_postfix() const
+{
+    string var_string{name};
+    return var_string;
+}
+
 string Operand::str() const
 {
     return this->get_postfix();
+}
+
+long double Variable::get_value() const
+{
+    return assigned_value;
+}
+
+void Variable::set_value(long double new_value)
+{
+    assigned_value = new_value;
 }

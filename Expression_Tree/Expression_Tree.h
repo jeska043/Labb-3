@@ -28,6 +28,8 @@ public:
     virtual std::string      str() const = 0;
    //virtual void             print(std::ostream&) const = 0;
     virtual Expression_Tree* clone() const = 0;
+
+    long double assigned_value;
 };
 
 class Binary_Operator : public Expression_Tree
@@ -55,13 +57,14 @@ public:
     //Expression_Tree* clone() const override;
 };
 
-/*
+
 class Assign : public Binary_Operator
 {
 public:
 Assign(Expression_Tree* lhs, Expression_Tree* rhs) : Binary_Operator{lhs, rhs} {};
+    long double evaluate() const override;
 };
-*/
+
 class Plus : public Binary_Operator
 {
 public:
@@ -120,14 +123,19 @@ public:
 private:
     long double value;
 };
-/*
+
 class Variable : public Operand
 {
 public:
     Variable(std::string);
     long double evaluate() const override;
+    std::string get_postfix() const override;
+    Expression_Tree* clone() const override;
+    long double get_value() const;
+    void set_value(long double);
 private:
-    std::string value;
+    std::string name;
+    long double assigned_value;
 };
-*/
+
 #endif
