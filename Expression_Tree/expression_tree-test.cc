@@ -80,14 +80,15 @@ Expression_Tree* TEST_CLONE{ TEST->clone() };
       cout << "Undantag fångat: " << e.what() << '\n';
    }
    cout << "assign1->get_postfix() = " << assign1->get_postfix() << '\n';
-   cout << "assign1->str() = " << assign1->str() << "\n\n";
-
+   cout << "assign1->str() = " << assign1->str() << endl;
+   cout << "assign1->print(cout):" << endl;
+   assign1->print(cout);
+ 
    Variable* var1{new Variable{"y"}};
    cout << "var1->get_value() = " << var1->get_value() << endl;
    cout << "var1->set_value(13.37);" << endl;
    var1->set_value(13.37);
    cout << "var1->get_value() = "<< var1->get_value() << endl;
 
-   
    return 0;
 }

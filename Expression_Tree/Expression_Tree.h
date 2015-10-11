@@ -26,7 +26,7 @@ public:
     virtual long double      evaluate() const = 0;
     virtual std::string      get_postfix() const = 0;
     virtual std::string      str() const = 0;
-   //virtual void             print(std::ostream&) const = 0;
+    virtual void             print(std::ostream&) const = 0;
     virtual Expression_Tree* clone() const = 0;
 
     long double assigned_value;
@@ -39,7 +39,7 @@ public:
     //long double evaluate() const override;
     std::string get_postfix() const override;
     std::string str() const override;
-    //void print(std::ostream&) const override;
+    void print(std::ostream&) const override;
     Expression_Tree* clone() const override;
 
 protected:
@@ -107,6 +107,7 @@ public:
     long double evaluate() const override;
     std::string get_postfix() const override;
     Expression_Tree* clone() const override;
+    void print(std::ostream&) const override;
 
 private:
     long long int value;
@@ -119,6 +120,7 @@ public:
     long double evaluate() const override;
     std::string get_postfix() const override;
     Expression_Tree* clone() const override;
+    void print(std::ostream&) const override;
 
 private:
     long double value;
@@ -133,6 +135,7 @@ public:
     Expression_Tree* clone() const override;
     long double get_value() const;
     void set_value(long double);
+    void print(std::ostream&) const override;
 private:
     std::string name;
     long double assigned_value;

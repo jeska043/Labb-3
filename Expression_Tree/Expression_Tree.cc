@@ -26,6 +26,29 @@ Binary_Operator::Binary_Operator(Expression_Tree* left, Expression_Tree* right)
     rhs = right;
 }
 
+void Binary_Operator::print(ostream& o_stream) const
+{
+    rhs->print(o_stream);
+    o_stream << "  /" << endl << " " << this->str()
+             << endl << "  \\" << endl;
+    lhs->print(o_stream);
+}
+
+void Integer::print(ostream& o_stream) const
+{
+    o_stream << "   " << value << endl;
+}
+
+void Real::print(ostream& o_stream) const
+{
+    o_stream << "   " << value << endl;
+}
+
+void Variable::print(ostream& o_stream) const
+{
+    o_stream << "   " << name << endl;
+}
+
 Expression_Tree* Binary_Operator::clone() const
 {
     Expression_Tree* p;
