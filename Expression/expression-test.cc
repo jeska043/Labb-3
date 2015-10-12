@@ -20,7 +20,7 @@ int main()
    cout << boolalpha << "e1.empty() = " << e1.empty() << "\n\n";
 
    Expression e2{e1};  // kopieringskonstruktor
-
+ 
    try
    {
       cout << "e2.evaluate() = " << e2.evaluate() << '\n';
@@ -37,7 +37,7 @@ int main()
 
    // Resten kräver implementering av Expression_Tree-klasserna.
 
-/*
+
    Expression_Tree* t{new Plus{new Integer{7}, new Real{3.14}}};
 
    Expression e3{t};  // konstruktor som tar ett länkat uttrycksträd
@@ -79,7 +79,7 @@ int main()
    cout << "e2.empty() = " << e2.empty() << '\n';
    cout << "e5.empty() = " << e5.empty() << "\n\n";
 
-*/
+
 
    return 0;
 }

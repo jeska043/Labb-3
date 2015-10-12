@@ -23,7 +23,10 @@ public:
    // OBSERVERA: DETTA ÄR ENDAST KODSKELETT - MODIFIERA OCH KOMPLETTERA!
 
 Expression(Expression_Tree* treetop) : tree_top{treetop} {};
+Expression() : tree_top{nullptr} {};
+    Expression(const Expression&);
 
+    ~Expression() = default;
    long double evaluate() const;
    std::string get_postfix() const;
    bool        empty() const;
