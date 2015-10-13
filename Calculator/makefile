@@ -14,7 +14,7 @@ CCFLAGS += -std=c++11 -Wpedantic -Wall -Wextra -Werror
 CPPFLAGS += -I$(EXPRESSION)
 
 # Objektkodsmoduler som ingÃ¥r i den kompletta kalkylatorn.
-OBJECTS = kalkylator.o Calculator.o Expression.o Expression_Tree.o
+OBJECTS = kalkylator.o Calculator.o Expression.o Expression_Tree.o Variable_Table.o
 
 # HuvudmÃ¥l - skapas med kommandot 'make' eller 'make kalkylator'.
 kalkylator: $(OBJECTS) makefile
@@ -33,6 +33,8 @@ Expression.o: $(EXPRESSION)/Expression.h $(EXPRESSION)/Expression.cc
 Expression_Tree.o: $(EXPRESSION)/Expression_Tree.h $(EXPRESSION)/Expression_Tree.cc
 	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c $(EXPRESSION)/Expression_Tree.cc
 
+Variable_Table.o: $(EXPRESSION)/Variable_Table.h $(EXPRESSION)/Variable_Table.cc
+	$(CCC) $(CPPFLAGS) $(CCFLAGS) -c $(EXPRESSION)/Variable_Table.cc
 # 'make clean' tar bort objektkodsfiler och 'core' (minnesdump).
 clean:
 	@ \rm -rf *.o *.gch core

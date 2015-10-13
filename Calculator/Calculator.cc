@@ -3,13 +3,15 @@
  */
 #include "Calculator.h"
 #include "Expression.h"
+#include "Variable_Table.h"
 #include <cctype>
 #include <iostream>
 #include <stdexcept>
 #include <string>
+
 using namespace std;
 
-const string Calculator::valid_cmds_("?HUBPTS");
+const string Calculator::valid_cmds_("?HUBPTSVX");
 
 /**
  * run: Huvudfunktionen för kalkylatorn. Skriver ut hjälpinformation
@@ -51,6 +53,8 @@ print_help()
    cout << "  P     Visa aktuellt uttryck som postfix\n";
    cout << "  T     Visa aktuellt uttryck som träd\n";
    cout << "  S     Avsluta kalkylatorn\n";
+   cout << "  V     Lista alla variabler\n";
+   cout << "  X     Radera alla variabler\n";
 }
 
 /**
@@ -103,6 +107,16 @@ execute_command()
       cout << current_expression_.get_postfix() << "\n";
    else if (command_ == 'T')
       current_expression_.print_tree(cout);
+   else if (command_ == 'V')
+   {
+       VT_.insert("x",3);
+       VT_.insert("y",10.52);
+       VT_.list(cout);
+   }
+   else if (command_ == 'X')
+   {
+       VT_.clear();
+   }
    else if (command_ == 'S')
       cout << "Kalkylatorn avlutas, välkommen åter!\n";
    else

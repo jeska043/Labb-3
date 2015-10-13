@@ -1,0 +1,6 @@
+#include "Variable_Table.h"
+#include <iostream>
+
+Variable_Table VT1;
+VT1.insert("x",5);
+cout << VT1["x"] << endl;
