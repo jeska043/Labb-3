@@ -13,6 +13,7 @@
 #include <string>
 #include <vector>
 #include <typeinfo>
+#include "Variable_Table.h"
 using namespace std;
 
 Expression::Expression(const Expression& e)
@@ -29,13 +30,13 @@ Expression::Expression(const Expression& e)
 /*
  * evaluate()
  */
-long double Expression::evaluate() const
+long double Expression::evaluate(Variable_Table& VT) const
 {
     if(tree_top == nullptr)
     {
         return 0;
     }
-    long double result{tree_top->evaluate()};
+    long double result{tree_top->evaluate(VT)};
     return result;
 }
 

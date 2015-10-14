@@ -8,6 +8,7 @@
 #include <typeinfo>
 #include <cmath>
 #include <iomanip>
+#include "Variable_Table.h"
 using namespace std;
 
 // SEPARATA DEFINITIONER FÖR FÖR EXPRESSION_TREE-KLASSERNA DEFINIERAS HÄR.
@@ -25,15 +26,6 @@ Assign::Assign(Expression_Tree* left, Expression_Tree* right)
 
     if(! (left_variable || right_variable))
         throw expression_error{"'=' måste användas med en variabel på minst en sida"};
-
-    if(left_variable)
-    {
-        left->assigned_value = right->evaluate();
-    }
-    else if(right_variable)
-    {
-        right->assigned_value = left->evaluate();
-    }
     
     lhs = left;
     rhs = right;
@@ -184,63 +176,79 @@ Variable::Variable(string a)
     name = a;
 }
 
-long double Integer::evaluate() const
+long double Integer::evaluate(Variable_Table& VT) const
 {
     return value;
 }
 
-long double Real::evaluate() const
+long double Real::evaluate(Variable_Table& VT) const
 {
     return value;
 }
 
-long double Variable::evaluate() const
+long double Variable::evaluate(Variable_Table& VT) const
 {
-    return assigned_value;
-}
-
-long double Plus::evaluate() const
-{
-    long double result{lhs->evaluate() + rhs->evaluate()};
-    return result;
-}
-
-long double Minus::evaluate() const
-{
-    long double result{lhs->evaluate() - rhs->evaluate()};
-    return result;
-}
-
-long double Times::evaluate() const
-{
-    long double result{lhs->evaluate() * rhs->evaluate()};
-    return result;
-}
-
-long double Divide::evaluate() const
-{
-    long double result{lhs->evaluate() / rhs->evaluate()};
-    return result;
-}
-
-long double Power::evaluate() const
-{
-    long double result{pow(lhs->evaluate(), rhs->evaluate())};
-    return result;
-}
-
-long double Assign::evaluate() const
-{
-    long double result{0};
-    if(typeid(*lhs) == typeid(Variable))
+    if(VT.find(name))
     {
-        result = rhs->evaluate();
+    return VT.get_value(name);
     }
     else
     {
-        result = lhs->evaluate();
+        throw expression_error{"Du kan ej evaluera en variabel som ej tilldelats ett värde."};
     }
+}
 
+long double Plus::evaluate(Variable_Table& VT) const
+{
+    long double result{lhs->evaluate(VT) + rhs->evaluate(VT)};
+    return result;
+}
+
+long double Minus::evaluate(Variable_Table& VT) const
+{
+    long double result{lhs->evaluate(VT) - rhs->evaluate(VT)};
+    return result;
+}
+
+long double Times::evaluate(Variable_Table& VT) const
+{
+    long double result{lhs->evaluate(VT) * rhs->evaluate(VT)};
+    return result;
+}
+
+long double Divide::evaluate(Variable_Table& VT) const
+{
+    long double result{lhs->evaluate(VT) / rhs->evaluate(VT)};
+    return result;
+}
+
+long double Power::evaluate(Variable_Table& VT) const
+{
+    long double result{pow(lhs->evaluate(VT), rhs->evaluate(VT))};
+    return result;
+}
+
+long double Assign::evaluate(Variable_Table& VT) const
+{
+    long double result{0};
+    if((typeid(*lhs) == typeid(*rhs)) || (typeid(*lhs) == typeid(Variable)))
+    {
+        result = rhs->evaluate(VT);
+        if(VT.find(lhs->str()))
+            {
+                VT.set_value(lhs->str(),result);
+            }
+            else
+            {
+                VT.insert(lhs->str(),result);
+            }
+    }
+    else if(typeid(*rhs) == typeid(Variable))
+    {
+        result = lhs->evaluate(VT);
+        VT.insert(rhs->str(),result);
+    }
+    
     return result;
 }
 
@@ -267,12 +275,12 @@ string Operand::str() const
     return this->get_postfix();
 }
 
-long double Variable::get_value() const
+long double Variable::get_value(Variable_Table& VT) const
 {
-    return assigned_value;
+    return VT.get_value(name);
 }
 
-void Variable::set_value(long double new_value)
+void Variable::set_value(long double new_value, Variable_Table& VT)
 {
-    assigned_value = new_value;
+    VT.set_value(name,new_value);
 }

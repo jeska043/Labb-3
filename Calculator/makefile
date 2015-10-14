@@ -8,7 +8,7 @@ EXPRESSION = ../Expression
 CCC = gccfilter -c -a g++
 
 # Kompilatorflaggor, lÃ¤gg till '-g' om kompilering fÃ¶r avlusning ska gÃ¶ras.
-CCFLAGS += -std=c++11 -Wpedantic -Wall -Wextra -Werror
+CCFLAGS += -std=c++11 -Wpedantic -Wall -Wextra
 
 # Preprocessorflaggor, -I lÃ¤gger till en filkatalog i inkluderingssÃ¶kvÃ¤gen.
 CPPFLAGS += -I$(EXPRESSION)

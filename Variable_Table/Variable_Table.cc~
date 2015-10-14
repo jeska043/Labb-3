@@ -1,9 +1,0 @@
-#include "Variable_Table.h"
-#include <string>
-#include <map>
-using namespace std;
-
-Variable_Table::insert(const string& name, long double value)
-{
-    variable_table.insert(pair<string,long double>(name,value));
-}

@@ -6,6 +6,7 @@
 #include <iosfwd>
 #include <string>
 #include <stdexcept>
+#include "Variable_Table.h"
 
 /*
  * expression_error: kastas om ett fel inträffar i en Expression-operation;
@@ -31,7 +32,7 @@ class Expression_Tree
 {
 public:
     virtual ~Expression_Tree() = default;
-    virtual long double      evaluate() const = 0;
+    virtual long double      evaluate(Variable_Table&) const = 0;
     virtual std::string      get_postfix() const = 0;
     virtual std::string      str() const = 0;
     virtual void             print(std::ostream&, int) const = 0;
@@ -72,49 +73,49 @@ class Assign : public Binary_Operator
 {
 public:
     Assign(Expression_Tree*, Expression_Tree*);
-    long double evaluate() const override;
+    long double evaluate(Variable_Table&) const override;
 };
 
 class Plus : public Binary_Operator
 {
 public:
 Plus(Expression_Tree* lhs, Expression_Tree* rhs) : Binary_Operator{lhs, rhs} {};
-    long double evaluate() const override;
+    long double evaluate(Variable_Table&) const override;
 };
 
 class Minus : public Binary_Operator 
 {
 public:
 Minus(Expression_Tree* lhs, Expression_Tree* rhs) : Binary_Operator{lhs, rhs} {};
-    long double evaluate() const override;
+    long double evaluate(Variable_Table&) const override;
 };
 
 class Times : public Binary_Operator
 {
 public:
 Times(Expression_Tree* lhs, Expression_Tree* rhs) : Binary_Operator{lhs, rhs} {};
-    long double evaluate() const override;
+    long double evaluate(Variable_Table&) const override;
 };
 
 class Divide : public Binary_Operator
 {
 public:
 Divide(Expression_Tree* lhs, Expression_Tree* rhs) : Binary_Operator{lhs, rhs} {};
-    long double evaluate() const override;
+    long double evaluate(Variable_Table&) const override;
 };
 
 class Power: public Binary_Operator
 {
 public:
 Power(Expression_Tree* lhs, Expression_Tree* rhs) : Binary_Operator{lhs, rhs} {};
-    long double evaluate() const override;
+    long double evaluate(Variable_Table&) const override;
 };
 
 class Integer : public Operand
 {
 public:
     Integer(long long int);
-    long double evaluate() const override;
+    long double evaluate(Variable_Table&) const override;
     std::string get_postfix() const override;
     Expression_Tree* clone() const override;
     void print(std::ostream&, int) const override;
@@ -127,7 +128,7 @@ class Real : public Operand
 {
 public:
     Real(long double);
-    long double evaluate() const override;
+    long double evaluate(Variable_Table&) const override;
     std::string get_postfix() const override;
     Expression_Tree* clone() const override;
     void print(std::ostream&, int) const override;
@@ -140,15 +141,14 @@ class Variable : public Operand
 {
 public:
     Variable(std::string);
-    long double evaluate() const override;
+    long double evaluate(Variable_Table&) const override;
     std::string get_postfix() const override;
     Expression_Tree* clone() const override;
-    long double get_value() const;
-    void set_value(long double);
+    long double get_value(Variable_Table&) const;
+    void set_value(long double,Variable_Table&);
     void print(std::ostream&, int) const override;
 private:
     std::string name;
-    long double assigned_value;
 };
 
 #endif

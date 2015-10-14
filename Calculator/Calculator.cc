@@ -8,10 +8,11 @@
 #include <iostream>
 #include <stdexcept>
 #include <string>
+#include <vector>
 
 using namespace std;
 
-const string Calculator::valid_cmds_("?HUBPTSVX");
+const string Calculator::valid_cmds_("?HUBPTSVXL");
 
 /**
  * run: Huvudfunktionen för kalkylatorn. Skriver ut hjälpinformation
@@ -51,6 +52,7 @@ print_help()
    cout << "  U     Mata in ett nytt uttryck\n";
    cout << "  B     Beräkna aktuellt uttryck\n";
    cout << "  P     Visa aktuellt uttryck som postfix\n";
+   cout << "  L     Lisa alla uttryck som infix\n";
    cout << "  T     Visa aktuellt uttryck som träd\n";
    cout << "  S     Avsluta kalkylatorn\n";
    cout << "  V     Lista alla variabler\n";
@@ -100,25 +102,31 @@ execute_command()
    if (command_ == 'H' || command_ == '?')
       print_help();
    else if (command_ == 'U')
-      read_expression(cin);
+   {
+       read_expression(cin);
+       expression_vector_.push_back(current_expression_);
+   }
    else if (command_ == 'B')
-     cout << current_expression_.evaluate() << "\n";
+       cout << current_expression_.evaluate(VT_) << "\n";
    else if (command_ == 'P')
-      cout << current_expression_.get_postfix() << "\n";
+       cout << current_expression_.get_postfix() << "\n";
    else if (command_ == 'T')
-      current_expression_.print_tree(cout);
+       current_expression_.print_tree(cout);
    else if (command_ == 'V')
-   {
-       VT_.insert("x",3);
-       VT_.insert("y",10.52);
        VT_.list(cout);
-   }
    else if (command_ == 'X')
-   {
        VT_.clear();
-   }
    else if (command_ == 'S')
       cout << "Kalkylatorn avlutas, välkommen åter!\n";
+     else if (command_ == 'L')
+   {
+       int pos = 1;
+       for(auto it = expression_vector_.begin(); it != expression_vector_.end(); ++it)
+       {
+           cout << pos << ": " << it->get_postfix() << endl;
+           ++pos;
+       }
+       }
    else
       cout << "Detta ska inte hända!\n";
 }

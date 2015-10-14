@@ -5,6 +5,7 @@
 #define CALCULATOR_H
 #include "Expression.h"
 #include "Variable_Table.h"
+#include <vector>
 #include <iosfwd>
 
 /**
@@ -16,6 +17,7 @@
  * en destruktor, kopieringskonstruktor eller kopieringstilldelnings-
  * operator deklareras.
  */
+
 class Calculator
 {
 public:
@@ -31,6 +33,7 @@ private:
    static const std::string valid_cmds_;
 
    Expression current_expression_;
+   std::vector<Expression> expression_vector_;
    Variable_Table VT_;
    char command_;
 

@@ -7,6 +7,7 @@
 #include <stdexcept>
 #include <string>
 #include "Expression_Tree.h"
+#include "Variable_Table.h"
 
 /**
  * expression_error: kastas om fel inträffar i en Expression- operation;
@@ -27,7 +28,7 @@ Expression() : tree_top{nullptr} {};
     Expression(const Expression&);
 
     ~Expression() = default;
-   long double evaluate() const;
+   long double evaluate(Variable_Table&) const;
    std::string get_postfix() const;
    bool        empty() const;
    void        print_tree(std::ostream&) const;
