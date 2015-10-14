@@ -52,7 +52,7 @@ print_help()
    cout << "  U     Mata in ett nytt uttryck\n";
    cout << "  B     Beräkna aktuellt uttryck\n";
    cout << "  P     Visa aktuellt uttryck som postfix\n";
-   cout << "  L     Lisa alla uttryck som infix\n";
+   cout << "  L     Lista alla uttryck som infix\n";
    cout << "  T     Visa aktuellt uttryck som träd\n";
    cout << "  S     Avsluta kalkylatorn\n";
    cout << "  V     Lista alla variabler\n";
@@ -120,11 +120,11 @@ execute_command()
       cout << "Kalkylatorn avlutas, välkommen åter!\n";
      else if (command_ == 'L')
    {
-       int pos = 1;
+       int n = 1;
        for(auto it = expression_vector_.begin(); it != expression_vector_.end(); ++it)
        {
-           cout << pos << ": " << it->get_postfix() << endl;
-           ++pos;
+           cout << n << ": " << it->get_infix() << endl;
+           ++n;
        }
        }
    else

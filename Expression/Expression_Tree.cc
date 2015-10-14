@@ -12,6 +12,58 @@
 using namespace std;
 
 // SEPARATA DEFINITIONER FÖR FÖR EXPRESSION_TREE-KLASSERNA DEFINIERAS HÄR.
+string Binary_Operator::get_infix() const
+{
+    string infix;
+Binary_Operator* p1{dynamic_cast<Binary_Operator*>(lhs)};
+Binary_Operator* p2{dynamic_cast<Binary_Operator*>(rhs)};     
+if((p1 == nullptr) && (p2 == nullptr))
+{
+    infix.append(lhs->str());
+    infix.append(" ");
+    infix.append(this->str());
+    infix.append(" ");
+    infix.append(rhs->str());
+}
+
+if((p1 == nullptr) && (p2 != nullptr))
+{
+    infix.append(lhs->str());
+    infix.append(" ");
+    infix.append(this->str());
+    infix.append(" (");
+    infix.append(rhs->get_infix());
+    infix.append(")");
+}
+
+if((p1 != nullptr) && (p2 == nullptr))
+{
+    infix.append("(");
+    infix.append(lhs->get_infix());
+    infix.append(") ");
+    infix.append(this->str());
+    infix.append(" ");
+    infix.append(rhs->str());
+}
+
+if((p1 != nullptr) && (p2 != nullptr))
+{
+    infix.append("(");
+    infix.append(lhs->get_infix());
+    infix.append(") ");
+    infix.append(this->str());
+    infix.append(" (");
+    infix.append(rhs->get_infix());
+    infix.append(")");
+}
+return infix;
+}
+
+string Operand::get_infix() const
+{
+    string infix{"..."};
+    return infix;
+}
 
 Binary_Operator::Binary_Operator(Expression_Tree* left, Expression_Tree* right)
 {

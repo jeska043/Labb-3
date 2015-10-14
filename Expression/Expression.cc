@@ -90,6 +90,11 @@ void swap(Expression& lhs, Expression& rhs)
     lhs.swap(rhs);
 }
 
+string Expression::get_infix() const
+{
+    string infix{tree_top->get_infix()};
+    return infix;
+}
 /*
  * make_expression() definieras efter namnrymden nedan.
  */
@@ -183,6 +188,7 @@ namespace
 	       formated.append(1, *it);
 	 }
       }
+     
       return formated;
    }
 

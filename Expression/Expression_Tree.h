@@ -37,6 +37,7 @@ public:
     virtual std::string      str() const = 0;
     virtual void             print(std::ostream&, int) const = 0;
     virtual Expression_Tree* clone() const = 0;
+    virtual std::string      get_infix() const = 0;
 
     long double assigned_value;
 };
@@ -51,6 +52,7 @@ public:
     std::string str() const override;
     void print(std::ostream&, int) const override;
     Expression_Tree* clone() const override;
+    std::string get_infix() const override;
 
 protected:
     Expression_Tree* lhs;
@@ -64,6 +66,7 @@ public:
     //long double evaluate() const override;
     // std::string get_postfix() const override;
     std::string str() const override;
+    std::string get_infix() const override;
     //void print(std::ostream&) const override;
     //Expression_Tree* clone() const override;
 };

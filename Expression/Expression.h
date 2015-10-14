@@ -33,6 +33,7 @@ Expression() : tree_top{nullptr} {};
    bool        empty() const;
    void        print_tree(std::ostream&) const;
    void        swap(Expression&);
+   std::string get_infix() const;
 
 private:
    Expression_Tree* tree_top;
