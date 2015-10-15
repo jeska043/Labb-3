@@ -46,6 +46,11 @@ class Binary_Operator : public Expression_Tree
 {
 public:
     Binary_Operator() = default;
+    ~Binary_Operator()
+    {
+        delete lhs;
+        delete rhs;
+    }
     Binary_Operator(Expression_Tree*, Expression_Tree*);
     //long double evaluate() const override;
     std::string get_postfix() const override;
@@ -66,7 +71,7 @@ public:
     //long double evaluate() const override;
     // std::string get_postfix() const override;
     std::string str() const override;
-    std::string get_infix() const override;
+    //std::string get_infix() const override;
     //void print(std::ostream&) const override;
     //Expression_Tree* clone() const override;
 };
@@ -122,6 +127,7 @@ public:
     std::string get_postfix() const override;
     Expression_Tree* clone() const override;
     void print(std::ostream&, int) const override;
+    std::string get_infix() const override;
 
 private:
     long long int value;
@@ -135,6 +141,7 @@ public:
     std::string get_postfix() const override;
     Expression_Tree* clone() const override;
     void print(std::ostream&, int) const override;
+    std::string get_infix() const override;
 
 private:
     long double value;
@@ -150,6 +157,7 @@ public:
     long double get_value(Variable_Table&) const;
     void set_value(long double,Variable_Table&);
     void print(std::ostream&, int) const override;
+    std::string get_infix() const override;
 private:
     std::string name;
 };

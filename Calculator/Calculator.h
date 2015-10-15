@@ -31,17 +31,20 @@ public:
 
 private:
    static const std::string valid_cmds_;
+   static const std::string cmds_with_args_;
 
    Expression current_expression_;
    std::vector<Expression> expression_vector_;
    Variable_Table VT_;
    char command_;
+   int number_{-1};
 
    static void print_help();
 
    void get_command();
    bool valid_command() const;
    void execute_command();
+   bool command_with_arg() const;
 
    void read_expression(std::istream&);
 };

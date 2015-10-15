@@ -15,53 +15,81 @@ using namespace std;
 string Binary_Operator::get_infix() const
 {
     string infix;
-Binary_Operator* p1{dynamic_cast<Binary_Operator*>(lhs)};
-Binary_Operator* p2{dynamic_cast<Binary_Operator*>(rhs)};     
-if((p1 == nullptr) && (p2 == nullptr))
-{
-    infix.append(lhs->str());
-    infix.append(" ");
-    infix.append(this->str());
-    infix.append(" ");
-    infix.append(rhs->str());
+    Binary_Operator* p1{dynamic_cast<Binary_Operator*>(lhs)};
+    Binary_Operator* p2{dynamic_cast<Binary_Operator*>(rhs)};     
+    if((p1 == nullptr) && (p2 == nullptr))
+    {
+        infix.append(lhs->str());
+        infix.append(" ");
+        infix.append(this->str());
+        infix.append(" ");
+        infix.append(rhs->str());
+    }
+
+    else if((p1 == nullptr) && (p2 != nullptr))
+    {
+        infix.append(lhs->str());
+        infix.append(" ");
+        infix.append(this->str());
+        if(typeid(*this) == typeid(Assign))
+        {
+            infix.append(" ");
+            infix.append(rhs->get_infix());
+        }
+        else
+        {
+        infix.append(" (");
+        infix.append(rhs->get_infix());
+        infix.append(")");
+        }
+    }
+
+    else if((p1 != nullptr) && (p2 == nullptr))
+    {
+        if(typeid(*this) == typeid(Assign))
+        {
+            infix.append(lhs->get_infix());
+            infix.append(" ");
+        }
+        else
+        {
+        infix.append("(");
+        infix.append(lhs->get_infix());
+        infix.append(") ");
+        }
+        infix.append(this->str());
+        infix.append(" ");
+        infix.append(rhs->str());
+    }
+
+    else if((p1 != nullptr) && (p2 != nullptr))
+    {
+        infix.append("(");
+        infix.append(lhs->get_infix());
+        infix.append(") ");
+        infix.append(this->str());
+        infix.append(" (");
+        infix.append(rhs->get_infix());
+        infix.append(")");
+    }
+    return infix;
 }
 
-if((p1 == nullptr) && (p2 != nullptr))
+string Integer::get_infix() const
 {
-    infix.append(lhs->str());
-    infix.append(" ");
-    infix.append(this->str());
-    infix.append(" (");
-    infix.append(rhs->get_infix());
-    infix.append(")");
+    string infix{to_string(value)};
+    return infix;
 }
 
-if((p1 != nullptr) && (p2 == nullptr))
+string Real::get_infix() const
 {
-    infix.append("(");
-    infix.append(lhs->get_infix());
-    infix.append(") ");
-    infix.append(this->str());
-    infix.append(" ");
-    infix.append(rhs->str());
+    string infix{to_string(value)};
+    return infix;
 }
 
-if((p1 != nullptr) && (p2 != nullptr))
+string Variable::get_infix() const
 {
-    infix.append("(");
-    infix.append(lhs->get_infix());
-    infix.append(") ");
-    infix.append(this->str());
-    infix.append(" (");
-    infix.append(rhs->get_infix());
-    infix.append(")");
-}
-return infix;
-}
-
-string Operand::get_infix() const
-{
-    string infix{"..."};
+    string infix{name};
     return infix;
 }
 

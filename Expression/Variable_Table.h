@@ -8,6 +8,16 @@
 
 using var_map = std::map<std::string,long double>;
 
+class variable_table_error : public std::logic_error
+{
+public:
+    explicit variable_table_error (const std::string& message) noexcept
+        : std::logic_error{message} {}
+
+    explicit variable_table_error (const char* message) noexcept
+        : std::logic_error{message} {}
+};
+
 class Variable_Table
 {
 public:
